@@ -1,0 +1,16 @@
+[configuration]
+entry_symbol = "InitializeLanguage"
+compatibility_minimum = "4.4"
+reloadable = false
+
+[libraries]
+windows.x86_64.single.debug = "res://Blade/BladeLang.windows.x86_64.dll"
+windows.x86_64.single.release = "res://Blade/BladeLang.windows.x86_64.dll"
+windows.x86_32.single.debug = "res://Blade/BladeLang.windows.x86_32.dll"
+windows.x86_32.single.release = "res://Blade/BladeLang.windows.x86_32.dll"
+linux.x86_64.single.debug = "res://Blade/libBladeLang.linux.x86_64.so"
+linux.x86_64.single.release = "res://Blade/libBladeLang.linux.x86_64.so"
+android.arm32.single.debug = "res://Blade/libBladeLang.android.arm32.so"
+android.arm32.single.release = "res://Blade/libBladeLang.android.arm32.so"
+android.arm64.single.debug = "res://Blade/libBladeLang.android.arm64.so"
+android.arm64.single.release = "res://Blade/libBladeLang.android.arm64.so"

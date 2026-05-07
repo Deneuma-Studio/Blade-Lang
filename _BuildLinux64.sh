@@ -1,0 +1,1 @@
+scons platform=linux target=template_release arch=x64 use_llvm=yes disable_exceptions=false
