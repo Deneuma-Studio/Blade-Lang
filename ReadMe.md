@@ -1,5 +1,3 @@
-DRAFT - INITIAL COMMIT
-
 # Blade Language
 
 Blade is a fully-featured cross-platform* high-performance scripting meta-language for Godot Engine
@@ -8,7 +6,7 @@ Blade is a fully-featured cross-platform* high-performance scripting meta-langua
 
 ## Overview
 
-**Blade** is a language framework designed as a full replacement for GDScript by bringing a C family language with all the features required as an alternative. Blade is a meta language which get transpiled to pure C code and gets compiled to native machine code for best performance. 
+**Blade** is a language framework designed as a full replacement for GDScript, bringing a C family language with all the necessary features as an alternative. Blade is a meta-language that gets transpiled to pure C code and compiled to native machine code for optimal performance.
 
 ### Features :
 
@@ -33,16 +31,16 @@ Blade Language doesn't support intellisence, autocomplete and interactive debugg
 
 ## Requirements
 
-Blade is a self-dependent extension, Blade defines a compiler interface which can be replaced and customized with any C compiler that supports in-memory compilation. However, default implementation relies on a custom version of TinyCC known as **TCCBE** (TinyCC Blade Edition) as current C compiler backend.
+Blade is a self-dependent extension. Blade defines a compiler interface that can be replaced and customized with any C compiler supporting in-memory compilation. However, the default implementation relies on a custom version of TinyCC, known as **TCCBE** (TinyCC Blade Edition), as the current C compiler backend.
 
-> Blade is **supported** on Windows (x64/x86/ARM64), Linux (x64/x86), Android (~~arm32~~/arm64) and ~~Web (WASM)~~  
-> Blade is **not supported** on MacOS and iOS due to JIT execution restrictions.
-
-> Blade itself by nature is supported on all platforms, However due to limitations of current C backend TinyCC it will not function on Web Assembly and arm-v7, To add support of these platforms it's required to replace current backend with a compiler with support of said platforms which must be driven from `BladeCompiler`
+> [!IMPORTANT]  
+> - Blade is **supported** on Windows (x64/x86/ARM64), Linux (x64/x86), Android (~~arm32~~/arm64) and ~~Web (WASM)~~  
+> - Blade is **not supported** on MacOS and iOS due to JIT execution restrictions.  
+> - Blade itself is inherently supported on all platforms. However, due to limitations of the current C backend, **TinyCC**, it will not function on **WebAssembly** and **arm-v7**. To add support for these platforms, it’s required to replace the current backend with a compiler that supports them, which must be driven from `BladeCompiler`
 
 ## Kernel-Based Execution
 
-Blade is a very flexible language and its core, syntax and behavior can be customized easily.
+Blade is a very flexible language and its core, syntax, and behavior can be easily customized.
 
 - `blade_exec` – dispatches a method call on a `Object` types.
 - `blade_vcall` – dispatches a method call on a raw `Variant` types.
@@ -58,19 +56,23 @@ Additionally, this routing mechanism can be leveraged for multiplayer games: rem
 
 ## Extension System
 
-In Blade, It's possible to add extension functions to any `Object` or `Variant` at any stage and any time.
+In Blade, it’s possible to add extension functions to any `Object` or `Variant` at any stage and any time.
 
 ![Extensions-Code-Example](Code-Extensions.png)
 
 ## Direct Use of C Language
 
-In any script file Blade transpiler can be dynamically switched using `blade_off` and `blade_on` to use C code directly in the block.
+In any script file, the Blade transpiler can be dynamically switched using `blade_off` and `blade_on` to use C code directly within a block.
 
 ## Properties
 
-In Blade, Creating properties is very easy and straight forward, It's a mix between GDScript and C++ methods.
+In Blade, crafting properties is remarkably easy and intuitive. It draws inspiration from both GDScript and C++ offering an efficient approach to defining and managing your data. Properties must be used in code with `$` prefix.
 
 ![Properties-Code-Example](Code-Properties.png)
+
+## Documentation
+
+Work in progress...
 
 ## License
 

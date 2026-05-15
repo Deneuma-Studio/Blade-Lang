@@ -992,7 +992,7 @@ static int assign_regs(int nb_args, int float_abi, struct plan *plan, int *todo)
         }
       }
       ncrn = (ncrn + (align-1)/4) & ~((align/4) - 1);
-      if (ncrn + size/4 <= 4 || (ncrn < 4 && start_vfpreg != -1)) {
+      if (ncrn + size/4 <= 4) {
         /* The parameter is allocated both in core register and on stack. As
 	 * such, it can be of either class: it would either be the last of
 	 * CORE_STRUCT_CLASS or the first of STACK_CLASS. */
