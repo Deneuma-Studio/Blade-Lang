@@ -4508,7 +4508,32 @@ ST_FUNC void indir(void)
 }
 
 /* pass a parameter to a function and do type checking and casting */
-static void gfunc_param_typed(Sym *func, Sym *arg)
+static void gfunc_param_typed_linux64(Sym* func, Sym* arg)
+{
+    /* Linux x86-64 SysV ABI : Structs Larger than 16 Bytes are Passed by Hidden Pointer */
+
+    CType type;
+    if ((arg->type.t & VT_BTYPE) == VT_STRUCT) {
+        int size, align;
+        size = type_size(&arg->type, &align);
+        if (size > 16) {
+            /* Pass by Hidden Pointer : Take Address of Argument */
+            test_lvalue();
+            mk_pointer(&vtop->type);
+            gaddrof();
+            type = arg->type;
+            mk_pointer(&type);
+            gen_assign_cast(&type);
+            return;
+        }
+    }
+	
+    /* Fallback */
+    type = arg->type;
+    type.t &= ~VT_CONSTANT; /* This is Needed to Avoid False Warning */
+    gen_assign_cast(&type);
+}
+static void gfunc_param_typed(Sym* func, Sym* arg)
 {
     int func_type;
     CType type;
@@ -4519,14 +4544,27 @@ static void gfunc_param_typed(Sym *func, Sym *arg)
         /* default casting : only need to convert float to double */
         if ((vtop->type.t & VT_BTYPE) == VT_FLOAT) {
             gen_cast_s(VT_DOUBLE);
-        } else if (vtop->type.t & VT_BITFIELD) {
+        }
+        else if (vtop->type.t & VT_BITFIELD) {
             type.t = vtop->type.t & (VT_BTYPE | VT_UNSIGNED);
-	    type.ref = vtop->type.ref;
+            type.ref = vtop->type.ref;
             gen_cast(&type);
         }
-    } else if (arg == NULL) {
+        else if (vtop->r & VT_MUSTCAST) {
+            force_charshort_cast(vtop->type.t);
+        }
+    }
+    else if (arg == NULL) {
         tcc_error("too many arguments to function");
-    } else {
+    }
+    else {
+#if defined(TCC_TARGET_X86_64) && !defined(TCC_TARGET_PE)
+        /* Linux x86-64: Check for Large Struct, Yeah I Fixed it, A Windows Developer :)  */
+        if ((arg->type.t & VT_BTYPE) == VT_STRUCT) {
+            gfunc_param_typed_linux64(func, arg);
+            return;
+        }
+#endif
         type = arg->type;
         type.t &= ~VT_CONSTANT; /* need to do that to avoid false warning */
         gen_assign_cast(&type);
